@@ -3,45 +3,26 @@ package kz.zunun.marvel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import kz.zunun.login.Login
-import kz.zunun.marvel.ui.theme.MarvelTheme
+import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
+import kz.zunun.character_detail.CharacterDetailComponent
+import kz.zunun.character_detail.CharacterDetailScreen
+import kz.zunun.characters.CharactersComponent
+import kz.zunun.characters.CharactersScreen
+import kz.zunun.ui_kit.theme.MarvelTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val root = rootComponent()
             MarvelTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Login()
+                Children(root.stack) {
+                    when (val component = it.instance) {
+                        is CharactersComponent -> CharactersScreen(component)
+                        is CharacterDetailComponent -> CharacterDetailScreen(component)
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MarvelTheme {
-        Greeting("Android")
     }
 }

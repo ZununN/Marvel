@@ -20,6 +20,12 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "Marvel"
 include(":app")
-include(":login")
+include(":ui-kit")
+include(":data")
+include(":domain")
+include(":core")
+include(":characters")
+include(":character_detail")
